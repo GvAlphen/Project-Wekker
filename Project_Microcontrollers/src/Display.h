@@ -28,8 +28,6 @@
 //void hClock();
 //void hReset();
 void horizontalLeds();
-
-void horizontalLeds();
-void verticalLeds();
+//void verticalLeds();
 
 #endif /* DISPLAY_H_ */

@@ -1,8 +1,6 @@
-int q = 0;
-void delay()
-{
-	for (q = 0; q<100000; q++)
-	{
-		asm("nop");
-	}
+#include <time.h>
+
+void delay(unsigned int secs) {
+    int retTime = time(0) + secs;
+    while (time(0) < retTime){}
 }

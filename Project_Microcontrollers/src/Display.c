@@ -1,6 +1,10 @@
 #include "Display.h"
 #include "Delay.h"
 
+#include<stdlib.h>
+
+unsigned int i = 0;
+
 void vReset() { // pin 0
 	FIOSET0 = 0x01;
 	FIOCLR0 = 0x01;
@@ -31,16 +35,14 @@ void hReset() { // pin 9
 	FIOCLR1 = 0x02;
 }
 
-void horizontalLeds() {
-	unsigned int i;
+void horizontalLeds() { //aansturen van de horizontale lijn
 	vReset();
 	hReset();
-	 //aansturen van de horizontale lijn
 	  while ( i < 7) {
 		  hData();
 		  hClock();
 		  hStorage();
-		  delay();
+		  delay(1);
 		  hReset();
 		  vClock();
 	      i++;
@@ -57,8 +59,8 @@ void horizontalLeds() {
 //}
 
 /*
-void verticalLeds() {
-	//aansturing van verticale lijn
+void verticalLeds() { //aansturing van verticale lijn
+
 	   while ( i < 25 ) {
 	       laad bit in;
 	       i++;

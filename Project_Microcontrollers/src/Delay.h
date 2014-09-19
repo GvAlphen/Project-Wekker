@@ -8,8 +8,6 @@
 #ifndef DELAY_H_
 #define DELAY_H_
 
-
+void delay(unsigned int secs);
 
 #endif /* DELAY_H_ */
-
-delay();
