@@ -1,5 +1,4 @@
 Project-Wekker
 ==============
 
-TEST ASDF
-QWERTY
+TEST
