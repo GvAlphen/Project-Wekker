@@ -1,3 +1,6 @@
+#ifndef SOMGENERATOR_H_
+#define SOMGENERATOR_H_
+
 #include "somGenerator.h"
 
 /*int main(){
@@ -69,3 +72,5 @@ int randomNum(int min, int max){
 	r = rand() % ((max - min) + 1) + min;
 	return r;
 }
+
+#endif /* SOMGENERATOR_H_ */
