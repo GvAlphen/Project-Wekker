@@ -2,8 +2,5 @@ Project-Wekker
 ==============
 
 
-QWERTY
-TEST ASDF
-
-aaa
+Project wekker in opdracht van Avans hogeschool voor de major Embedded Systems
 
