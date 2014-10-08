@@ -4,19 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/Project_Microcontroller_MT.c \
+../src/Display_test.c \
 ../src/cr_startup_lpc175x_6x.c \
 ../src/crp.c \
 ../src/display.c 
 
 OBJS += \
-./src/Project_Microcontroller_MT.o \
+./src/Display_test.o \
 ./src/cr_startup_lpc175x_6x.o \
 ./src/crp.o \
 ./src/display.o 
 
 C_DEPS += \
-./src/Project_Microcontroller_MT.d \
+./src/Display_test.d \
 ./src/cr_startup_lpc175x_6x.d \
 ./src/crp.d \
 ./src/display.d 

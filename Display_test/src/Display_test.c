@@ -1,6 +1,6 @@
 /*
 ===============================================================================
- Name        : Project_Microcontroller_MT.c
+ Name        : Display_test.c
  Author      : $(author)
  Version     :
  Copyright   : $(copyright)
@@ -12,9 +12,8 @@
 #include "LPC17xx.h"
 #endif
 
+#include "display.h"
 #include <cr_section_macros.h>
-
-#include <stdio.h>
 
 // TODO: insert other include files here
 
@@ -22,13 +21,16 @@
 
 int main(void) {
 
+    // TODO: insert code here
 	init();
-
+	char time[] ={ '1', '9', ':', '2', '9'};
     // Force the counter to be placed into memory
     volatile static int i = 0 ;
     // Enter an infinite loop, just incrementing a counter
     while(1) {
-        printToDisplay("19:25");
+
+    	printToDisplay(time);
+
     }
     return 0 ;
 }

@@ -1,0 +1,347 @@
+Archive member included because of file (symbol)
+
+c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a(__weak__main.o)
+                              ./src/cr_startup_lpc175x_6x.o (__main)
+
+Discarded input sections
+
+ .group         0x00000000        0x8 ./src/Display_test.o
+ .group         0x00000000        0x8 ./src/Display_test.o
+ .group         0x00000000        0x8 ./src/Display_test.o
+ .text          0x00000000        0x0 ./src/Display_test.o
+ .data          0x00000000        0x0 ./src/Display_test.o
+ .bss           0x00000000        0x0 ./src/Display_test.o
+ .bss.i.3638    0x00000000        0x4 ./src/Display_test.o
+ .group         0x00000000        0x8 ./src/cr_startup_lpc175x_6x.o
+ .text          0x00000000        0x0 ./src/cr_startup_lpc175x_6x.o
+ .data          0x00000000        0x0 ./src/cr_startup_lpc175x_6x.o
+ .bss           0x00000000        0x0 ./src/cr_startup_lpc175x_6x.o
+ .debug_macro   0x00000000      0x856 ./src/cr_startup_lpc175x_6x.o
+ .group         0x00000000        0x8 ./src/crp.o
+ .group         0x00000000        0x8 ./src/crp.o
+ .text          0x00000000        0x0 ./src/crp.o
+ .data          0x00000000        0x0 ./src/crp.o
+ .bss           0x00000000        0x0 ./src/crp.o
+ .crp           0x00000000        0x4 ./src/crp.o
+ .debug_info    0x00000000       0x3f ./src/crp.o
+ .debug_abbrev  0x00000000       0x36 ./src/crp.o
+ .debug_aranges
+                0x00000000       0x18 ./src/crp.o
+ .debug_macro   0x00000000       0x1a ./src/crp.o
+ .debug_macro   0x00000000      0x856 ./src/crp.o
+ .debug_macro   0x00000000       0x34 ./src/crp.o
+ .debug_line    0x00000000       0x78 ./src/crp.o
+ .debug_str     0x00000000     0x24c4 ./src/crp.o
+ .comment       0x00000000       0x71 ./src/crp.o
+ .ARM.attributes
+                0x00000000       0x33 ./src/crp.o
+ .group         0x00000000        0x8 ./src/display.o
+ .group         0x00000000        0x8 ./src/display.o
+ .text          0x00000000        0x0 ./src/display.o
+ .data          0x00000000        0x0 ./src/display.o
+ .bss           0x00000000        0x0 ./src/display.o
+ .text.clear    0x00000000       0x34 ./src/display.o
+ .data.PLUS     0x00000000       0x8c ./src/display.o
+ .data.MINUS    0x00000000       0x8c ./src/display.o
+ .debug_macro   0x00000000      0x856 ./src/display.o
+ .debug_macro   0x00000000       0x3a ./src/display.o
+ .text          0x00000000        0x0 c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a(__weak__main.o)
+ .data          0x00000000        0x0 c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a(__weak__main.o)
+ .bss           0x00000000        0x0 c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a(__weak__main.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+MFlash512        0x00000000         0x00080000         xr
+RamLoc32         0x10000000         0x00008000         xrw
+RamAHB32         0x2007c000         0x00008000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD ./src/Display_test.o
+LOAD ./src/cr_startup_lpc175x_6x.o
+LOAD ./src/crp.o
+LOAD ./src/display.o
+START GROUP
+LOAD c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a
+LOAD c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/armv7-m\libcr_eabihelpers.a
+END GROUP
+                0x00080000                __top_MFlash512 = 0x80000
+                0x10008000                __top_RamLoc32 = 0x10008000
+                0x20084000                __top_RamAHB32 = 0x20084000
+
+.text           0x00000000      0x430
+ FILL mask 0xff
+                0x00000000                __vectors_start__ = ABSOLUTE (.)
+ *(.isr_vector)
+ .isr_vector    0x00000000       0xcc ./src/cr_startup_lpc175x_6x.o
+                0x00000000                g_pfnVectors
+                0x000000cc                . = ALIGN (0x4)
+                0x000000cc                __section_table_start = .
+                0x000000cc                __data_section_table = .
+                0x000000cc        0x4 LONG 0x430 LOADADDR (.data)
+                0x000000d0        0x4 LONG 0x10000000 ADDR (.data)
+                0x000000d4        0x4 LONG 0x604 SIZEOF (.data)
+                0x000000d8        0x4 LONG 0x430 LOADADDR (.data_RAM2)
+                0x000000dc        0x4 LONG 0x2007c000 ADDR (.data_RAM2)
+                0x000000e0        0x4 LONG 0x0 SIZEOF (.data_RAM2)
+                0x000000e4                __data_section_table_end = .
+                0x000000e4                __bss_section_table = .
+                0x000000e4        0x4 LONG 0x10000604 ADDR (.bss)
+                0x000000e8        0x4 LONG 0x0 SIZEOF (.bss)
+                0x000000ec        0x4 LONG 0x2007c000 ADDR (.bss_RAM2)
+                0x000000f0        0x4 LONG 0x0 SIZEOF (.bss_RAM2)
+                0x000000f4                __bss_section_table_end = .
+                0x000000f4                __section_table_end = .
+ *(.after_vectors*)
+ .after_vectors
+                0x000000f4       0xa0 ./src/cr_startup_lpc175x_6x.o
+                0x000000f4                NMI_Handler
+                0x000000f8                HardFault_Handler
+                0x000000fc                MemManage_Handler
+                0x00000100                BusFault_Handler
+                0x00000104                UsageFault_Handler
+                0x00000108                SVC_Handler
+                0x0000010c                DebugMon_Handler
+                0x00000110                PendSV_Handler
+                0x00000114                SysTick_Handler
+                0x00000118                PWM1_IRQHandler
+                0x00000118                I2C1_IRQHandler
+                0x00000118                EINT2_IRQHandler
+                0x00000118                UART1_IRQHandler
+                0x00000118                EINT3_IRQHandler
+                0x00000118                CANActivity_IRQHandler
+                0x00000118                TIMER3_IRQHandler
+                0x00000118                UART0_IRQHandler
+                0x00000118                MCPWM_IRQHandler
+                0x00000118                I2C0_IRQHandler
+                0x00000118                IntDefaultHandler
+                0x00000118                RIT_IRQHandler
+                0x00000118                CAN_IRQHandler
+                0x00000118                PLL1_IRQHandler
+                0x00000118                SSP0_IRQHandler
+                0x00000118                I2S_IRQHandler
+                0x00000118                I2C2_IRQHandler
+                0x00000118                RTC_IRQHandler
+                0x00000118                TIMER0_IRQHandler
+                0x00000118                SPI_IRQHandler
+                0x00000118                UART3_IRQHandler
+                0x00000118                EINT1_IRQHandler
+                0x00000118                TIMER1_IRQHandler
+                0x00000118                UART2_IRQHandler
+                0x00000118                ADC_IRQHandler
+                0x00000118                SSP1_IRQHandler
+                0x00000118                USB_IRQHandler
+                0x00000118                BOD_IRQHandler
+                0x00000118                USBActivity_IRQHandler
+                0x00000118                WDT_IRQHandler
+                0x00000118                PLL0_IRQHandler
+                0x00000118                QEI_IRQHandler
+                0x00000118                EINT0_IRQHandler
+                0x00000118                TIMER2_IRQHandler
+                0x00000118                DMA_IRQHandler
+                0x00000118                ENET_IRQHandler
+                0x0000011c                data_init
+                0x00000138                bss_init
+                0x0000014c                ResetISR
+ *(.text*)
+ .text.main     0x00000194       0x24 ./src/Display_test.o
+                0x00000194                main
+ .text.sleep    0x000001b8       0x14 ./src/display.o
+                0x000001b8                sleep
+ .text.setPin   0x000001cc       0x20 ./src/display.o
+                0x000001cc                setPin
+ .text.init     0x000001ec       0x44 ./src/display.o
+                0x000001ec                init
+ .text.matrixWriteRow
+                0x00000230       0x88 ./src/display.o
+                0x00000230                matrixWriteRow
+ .text.fillRow  0x000002b8       0x8c ./src/display.o
+                0x000002b8                fillRow
+ .text.getCase  0x00000344       0x70 ./src/display.o
+                0x00000344                getCase
+ .text.printAllRows
+                0x000003b4       0x70 ./src/display.o
+                0x000003b4                printAllRows
+ .text.__weak_main
+                0x00000424        0x4 c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a(__weak__main.o)
+                0x00000424                __weak_main
+                0x00000424                __main
+ *(.rodata .rodata.* .constdata .constdata.*)
+ .rodata        0x00000428        0x8 ./src/Display_test.o
+                0x00000430                . = ALIGN (0x4)
+
+.glue_7         0x00000430        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x00000430        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x00000430        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x00000430        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x00000430        0x0
+ .iplt          0x00000000        0x0 ./src/Display_test.o
+
+.rel.dyn        0x00000430        0x0
+ .rel.iplt      0x00000000        0x0 ./src/Display_test.o
+
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x00000430                __exidx_start = .
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x00000430                __exidx_end = .
+                0x00000430                _etext = .
+
+.data_RAM2      0x2007c000        0x0 load address 0x00000430
+ FILL mask 0xff
+ *(.ramfunc.$RAM2)
+ *(.ramfunc.$RamAHB32)
+ *(.data.$RAM2*)
+ *(.data.$RamAHB32*)
+                0x2007c000                . = ALIGN (0x4)
+
+.uninit_RESERVED
+                0x10000000        0x0
+ *(.bss.$RESERVED*)
+                0x10000000                . = ALIGN (0x4)
+                0x10000000                _end_uninit_RESERVED = .
+
+.data           0x10000000      0x604 load address 0x00000430
+ FILL mask 0xff
+                0x10000000                _data = .
+ *(vtable)
+ *(.ramfunc*)
+ *(.data*)
+ .data.THREE    0x10000000       0x8c ./src/display.o
+                0x10000000                THREE
+ .data.NINE     0x1000008c       0x8c ./src/display.o
+                0x1000008c                NINE
+ .data.SEVEN    0x10000118       0x8c ./src/display.o
+                0x10000118                SEVEN
+ .data.FIVE     0x100001a4       0x8c ./src/display.o
+                0x100001a4                FIVE
+ .data.ZERO     0x10000230       0x8c ./src/display.o
+                0x10000230                ZERO
+ .data.TWO      0x100002bc       0x8c ./src/display.o
+                0x100002bc                TWO
+ .data.COLON    0x10000348       0x8c ./src/display.o
+                0x10000348                COLON
+ .data.FOUR     0x100003d4       0x8c ./src/display.o
+                0x100003d4                FOUR
+ .data.ONE      0x10000460       0x8c ./src/display.o
+                0x10000460                ONE
+ .data.SIX      0x100004ec       0x8c ./src/display.o
+                0x100004ec                SIX
+ .data.EIGHT    0x10000578       0x8c ./src/display.o
+                0x10000578                EIGHT
+                0x10000604                . = ALIGN (0x4)
+                0x10000604                _edata = .
+
+.igot.plt       0x10000604        0x0 load address 0x00000a34
+ .igot.plt      0x00000000        0x0 ./src/Display_test.o
+
+.bss_RAM2       0x2007c000        0x0
+ *(.bss.$RAM2*)
+ *(.bss.$RamAHB32*)
+                0x2007c000                . = ALIGN (0x4)
+
+.bss            0x10000604        0x0
+                0x10000604                _bss = .
+ *(.bss*)
+ *(COMMON)
+                0x10000604                . = ALIGN (0x4)
+                0x10000604                _ebss = .
+                0x10000604                PROVIDE (end, .)
+
+.noinit_RAM2    0x2007c000        0x0
+ *(.noinit.$RAM2*)
+ *(.noinit.$RamAHB32*)
+                0x2007c000                . = ALIGN (0x4)
+
+.noinit         0x10000604        0x0
+                0x10000604                _noinit = .
+ *(.noinit*)
+                0x10000604                . = ALIGN (0x4)
+                0x10000604                _end_noinit = .
+                0x10000604                PROVIDE (_pvHeapStart, .)
+                0x10008000                PROVIDE (_vStackTop, (__top_RamLoc32 - 0x0))
+OUTPUT(Display_test.axf elf32-littlearm)
+
+.debug_info     0x00000000      0x8f0
+ .debug_info    0x00000000       0xc8 ./src/Display_test.o
+ .debug_info    0x000000c8      0x277 ./src/cr_startup_lpc175x_6x.o
+ .debug_info    0x0000033f      0x5b1 ./src/display.o
+
+.debug_abbrev   0x00000000      0x33c
+ .debug_abbrev  0x00000000       0xdb ./src/Display_test.o
+ .debug_abbrev  0x000000db      0x111 ./src/cr_startup_lpc175x_6x.o
+ .debug_abbrev  0x000001ec      0x150 ./src/display.o
+
+.debug_aranges  0x00000000       0xf8
+ .debug_aranges
+                0x00000000       0x20 ./src/Display_test.o
+ .debug_aranges
+                0x00000020       0x80 ./src/cr_startup_lpc175x_6x.o
+ .debug_aranges
+                0x000000a0       0x58 ./src/display.o
+
+.debug_ranges   0x00000000       0xc8
+ .debug_ranges  0x00000000       0x10 ./src/Display_test.o
+ .debug_ranges  0x00000010       0x70 ./src/cr_startup_lpc175x_6x.o
+ .debug_ranges  0x00000080       0x48 ./src/display.o
+
+.debug_macro    0x00000000      0x96c
+ .debug_macro   0x00000000       0x23 ./src/Display_test.o
+ .debug_macro   0x00000023      0x856 ./src/Display_test.o
+ .debug_macro   0x00000879       0x3a ./src/Display_test.o
+ .debug_macro   0x000008b3       0x82 ./src/Display_test.o
+ .debug_macro   0x00000935       0x1d ./src/cr_startup_lpc175x_6x.o
+ .debug_macro   0x00000952       0x1a ./src/display.o
+
+.debug_line     0x00000000      0x2f1
+ .debug_line    0x00000000       0xae ./src/Display_test.o
+ .debug_line    0x000000ae       0xaa ./src/cr_startup_lpc175x_6x.o
+ .debug_line    0x00000158      0x199 ./src/display.o
+
+.debug_str      0x00000000     0x2b4a
+ .debug_str     0x00000000     0x28d2 ./src/Display_test.o
+                               0x28e1 (size before relaxing)
+ .debug_str     0x000028d2      0x1c9 ./src/cr_startup_lpc175x_6x.o
+                               0x25b3 (size before relaxing)
+ .debug_str     0x00002a9b       0xaf ./src/display.o
+                               0x252c (size before relaxing)
+
+.comment        0x00000000       0xe0
+ .comment       0x00000000       0x70 ./src/Display_test.o
+                                 0x71 (size before relaxing)
+ .comment       0x00000000       0x71 ./src/cr_startup_lpc175x_6x.o
+ .comment       0x00000000       0x71 ./src/display.o
+ .comment       0x00000070       0x70 c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a(__weak__main.o)
+                                 0x71 (size before relaxing)
+
+.ARM.attributes
+                0x00000000       0x33
+ .ARM.attributes
+                0x00000000       0x33 ./src/Display_test.o
+ .ARM.attributes
+                0x00000033       0x33 ./src/cr_startup_lpc175x_6x.o
+ .ARM.attributes
+                0x00000066       0x33 ./src/display.o
+ .ARM.attributes
+                0x00000099       0x33 c:/nxp/lpcxpresso_7.3.0_186/lpcxpresso/tools/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libcr_c.a(__weak__main.o)
+
+.debug_frame    0x00000000      0x1f8
+ .debug_frame   0x00000000       0x2c ./src/Display_test.o
+ .debug_frame   0x0000002c       0xf4 ./src/cr_startup_lpc175x_6x.o
+ .debug_frame   0x00000120       0xd8 ./src/display.o
+
+.debug_loc      0x00000000      0x3f6
+ .debug_loc     0x00000000      0x1d1 ./src/cr_startup_lpc175x_6x.o
+ .debug_loc     0x000001d1      0x225 ./src/display.o
