@@ -7,19 +7,22 @@ C_SRCS += \
 ../src/Project_Microcontroller_MT.c \
 ../src/cr_startup_lpc175x_6x.c \
 ../src/crp.c \
-../src/display.c 
+../src/display.c \
+../src/somGenerator.c 
 
 OBJS += \
 ./src/Project_Microcontroller_MT.o \
 ./src/cr_startup_lpc175x_6x.o \
 ./src/crp.o \
-./src/display.o 
+./src/display.o \
+./src/somGenerator.o 
 
 C_DEPS += \
 ./src/Project_Microcontroller_MT.d \
 ./src/cr_startup_lpc175x_6x.d \
 ./src/crp.d \
-./src/display.d 
+./src/display.d \
+./src/somGenerator.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

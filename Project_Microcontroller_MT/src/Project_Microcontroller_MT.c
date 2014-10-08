@@ -17,18 +17,21 @@
 #include <stdio.h>
 
 // TODO: insert other include files here
-
+#include "display.h"
+#include "somGenerator.h"
 // TODO: insert other definitions and declarations here
 
 int main(void) {
 
-	init();
+	init(); //inits display
+	initSomGenerator(); //inits RNG
 
-    // Force the counter to be placed into memory
-    volatile static int i = 0 ;
-    // Enter an infinite loop, just incrementing a counter
+	char *som;
+	som = generateSom();
+	printf(som);
+
     while(1) {
-        printToDisplay("19:25");
+        printToDisplay(som);
     }
     return 0 ;
 }
