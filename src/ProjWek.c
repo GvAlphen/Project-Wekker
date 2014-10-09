@@ -15,12 +15,26 @@
 // TODO: insert other include files here
 #include "display.h"
 #include "somGenerator.h"
+#include "timer.h"
 // TODO: insert other definitions and declarations here
 int main(void) {
-	init();
+	initDisplay();
+	initSomGenerator();
+	initTimer0();
+	resetTimer0();
+
+	char* strptr;
+	char banaan[10];
+	int a;
+	strptr = generateSom();
+
+	strcpy(banaan, strptr);
+	free(strptr);
+
+	//printf(banaan);
 
 	while (1) {
-		printToDisplay("19:25");
+		//printToDisplay(banaan);
 	}
 	return 0;
 }

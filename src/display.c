@@ -22,7 +22,7 @@ void setPin( int *reg, int pin, int status){
 	}
 }
 
-void init() {
+void initDisplay() {
 	FIOPIN0 = 0;
 	FIODIR0 = 0xFFFF;
 	setPin(&FIOPIN0, H_RST, 0);
@@ -170,6 +170,25 @@ int MINUS[35] =
  0,0,0,0,0,
  0,0,0,0,0};
 
+int DIVIDE[35] =
+{0,0,0,0,0,
+ 0,0,0,0,1,
+ 0,0,0,1,0,
+ 0,0,1,0,0,
+ 0,1,0,0,0,
+ 1,0,0,0,0,
+ 0,0,0,0,0};
+
+int MULTIPLY[35] =
+{0,0,0,0,0,
+ 1,0,0,0,1,
+ 0,1,0,1,0,
+ 0,0,1,0,0,
+ 0,1,0,1,0,
+ 1,0,0,0,1,
+ 0,0,0,0,0};
+
+
 void fillRow(int char1[], int char2[], int char3[], int char4[], int char5[], int row){
   int rows = 0;
   int x;
@@ -224,6 +243,10 @@ int * getCase(char input){
 	case '8': 	return EIGHT;	break;
 	case '9':	return NINE; 	break;
 	case ':':	return COLON;	break;
+	case '/':   return DIVIDE; 	break;
+	case '*': 	return MULTIPLY;break;
+	case '-':   return MINUS;   break;
+	case '+':   return PLUS;    break;
 	}
 }
 

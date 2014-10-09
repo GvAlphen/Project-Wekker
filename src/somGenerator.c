@@ -19,6 +19,8 @@
 char* generateSom(){
 	char op = randomOperator();
 	char buff[11];
+	char num1buff[3];
+	char num2buff[3];
 	char* som = malloc(sizeof(char) * 11);
 
 	int firstNum = randomNum(0, 99);
@@ -49,7 +51,19 @@ char* generateSom(){
 		break;
 	}
 
-	sprintf(buff, "%d%c%d=%d", firstNum, op, secondNum, answer);
+	if(firstNum < 10){
+		sprintf(num1buff, "0%d", firstNum);
+	} else {
+		sprintf(num1buff, "%d", firstNum);
+	}
+
+	if(secondNum < 10){
+		sprintf(num2buff, "0%d", secondNum);
+	} else {
+		sprintf(num2buff, "%d", secondNum);
+	}
+
+	sprintf(buff, "%s%c%s=%d", num1buff, op, num2buff, answer);
 	strncpy(som, buff, 11);
 	return som;
 }

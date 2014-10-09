@@ -20,7 +20,7 @@
 
 void sleep(int sec);
 void setPin( int *reg, int pin, int status);
-void init();
+void initDisplay();
 void clear();
 void printRow(int data);
 
