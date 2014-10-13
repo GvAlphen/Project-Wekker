@@ -13,7 +13,9 @@
 #define T0PRESCALEREG	(*(unsigned int *) 0x4000400C)
 
 void initTimer0();
-int readTimer0();
+unsigned short readTimer0();
 void resetTimer0();
+
+void sleep(int sec);
 
 #endif /* TIMER_H_ */

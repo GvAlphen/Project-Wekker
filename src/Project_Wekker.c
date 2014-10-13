@@ -1,4 +1,12 @@
 /*
+ * Project_Wekker.c
+ *
+ *  Created on: 9 okt. 2014
+ *      Author: Martijn
+ */
+
+
+/*
  ===============================================================================
  Name : Project_Microcontroller_MT.c
  Author : $(author)
@@ -16,25 +24,28 @@
 #include "display.h"
 #include "somGenerator.h"
 #include "timer.h"
+#include "RC5.h"
 // TODO: insert other definitions and declarations here
 int main(void) {
-	initDisplay();
-	initSomGenerator();
+//	initDisplay();
+//	initSomGenerator();
 	initTimer0();
 	resetTimer0();
+	initRC5();
 
-	char* strptr;
-	char banaan[10];
-	int a;
-	strptr = generateSom();
-
-	strcpy(banaan, strptr);
-	free(strptr);
+//	char* strptr;
+//	char banaan[10];
+//	int a;
+//	strptr = generateSom();
+//
+//	strcpy(banaan, strptr);
+//	free(strptr);
 
 	//printf(banaan);
 
 	while (1) {
 		//printToDisplay(banaan);
+
 	}
 	return 0;
 }
