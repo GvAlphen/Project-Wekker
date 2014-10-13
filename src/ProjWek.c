@@ -26,12 +26,16 @@
 #include "timer.h"
 #include "RC5.h"
 // TODO: insert other definitions and declarations here
+
+
 int main(void) {
-//	initDisplay();
+	char buff[30];
+	int tmp;
+	initDisplay();
 //	initSomGenerator();
 	initTimer0();
-	resetTimer0();
 	initRC5();
+	resetTimer0();
 
 //	char* strptr;
 //	char banaan[10];
@@ -42,10 +46,13 @@ int main(void) {
 //	free(strptr);
 
 	//printf(banaan);
-
+	clear();
 	while (1) {
-		//printToDisplay(banaan);
-
+		if(commandCount > 5){
+			tmp = getCommand(commandCount - 1);
+			sprintf(buff, "%d%d%d%d%d", tmp, tmp, tmp, tmp, tmp);
+			printToDisplay(buff);
+		}
 	}
 	return 0;
 }

@@ -17,7 +17,10 @@
 
 #define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
 
+extern int commandCount;
+
 void initRC5();
+int getCommand(int pos);
 void EINT0_IRQHandler();
 void EINT1_IRQHandler();
 void EINT2_IRQHandler();
