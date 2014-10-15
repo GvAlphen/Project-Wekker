@@ -28,7 +28,7 @@ void initRTC()
 	PINMODE_OD0 |= 0xC00;	//set as open drain mode
 
 	I2C2CONSET |= 0x40;		//bit 6 enable i2c interface
-//
+
 	I2SCLH = 0xA;
 	I2SCLL = 0xA;
 }
