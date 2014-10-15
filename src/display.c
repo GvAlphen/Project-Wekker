@@ -226,7 +226,7 @@ void printToDisplay(char time[]){ // "19:12"
 	for(row = 1 ; row <= 7 ; row++){
 		fillRow(getCase(time[0]), getCase(time[1]), getCase(time[2]), getCase(time[3]), getCase(time[4]), row);
 	}
-	sleep(1);
+	delay(90);
 	setPin(&FIOPIN0, V_RST, 1);
 	setPin(&FIOPIN0, V_RST, 0);
 

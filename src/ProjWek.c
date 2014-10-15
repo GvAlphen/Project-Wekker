@@ -48,11 +48,12 @@ int main(void) {
 	//printf(banaan);
 	clear();
 	while (1) {
-		if(commandCount > 5){
+/*		if(commandCount > 5){
 			tmp = getCommand(commandCount - 1);
 			sprintf(buff, "%d%d%d%d%d", tmp, tmp, tmp, tmp, tmp);
 			printToDisplay(buff);
-		}
+		}*/
+		printToDisplay("10101");
 	}
 	return 0;
 }
