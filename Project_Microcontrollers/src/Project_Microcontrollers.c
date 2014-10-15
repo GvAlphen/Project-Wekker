@@ -17,5 +17,10 @@
 
 
 int main(void) {
-	horizontalLeds();
+
+	test();
+	while(1) {
+		asm("nop");
+	}
+	return(0);
 }
