@@ -8,17 +8,17 @@
 #include "display.h"
 #include "timer.h"
 
-void setPin( int *reg, int pin, int status){
+void setPin( int *reg, unsigned int pin, int status){
 	if(status){
-		*reg = *reg |= (1<<pin);
+		*reg = *reg |= (1 << pin);
 	}else{
-		*reg = *reg &=~ (1<<pin);
+		*reg = *reg &= ~(1 << pin);
 	}
 }
 
 void initDisplay() {
 	FIOPIN0 = 0;
-	FIODIR0 = 0xFFFF;
+	FIODIR0 = 0xFFFFFFFF;
 	setPin(&FIOPIN0, H_RST, 0);
 	setPin(&FIOPIN0, V_RST, 1);
 	setPin(&FIOPIN0, V_RST, 0);
@@ -98,8 +98,8 @@ int FIVE[35] =
  1,0,0,0,0,
  1,1,1,1,0,
  0,0,0,0,1,
- 1,0,0,0,1,
- 0,1,1,1,0};
+ 0,0,0,0,1,
+ 1,1,1,1,0};
 
 int SIX[35] =
 {0,1,1,1,0,
@@ -227,8 +227,7 @@ void printToDisplay(char time[]){ // "19:12"
 		fillRow(getCase(time[0]), getCase(time[1]), getCase(time[2]), getCase(time[3]), getCase(time[4]), row);
 	}
 	delay(90);
-	setPin(&FIOPIN0, V_RST, 1);
-	setPin(&FIOPIN0, V_RST, 0);
+	clear();
 
 }
 

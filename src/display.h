@@ -19,7 +19,7 @@
 #define V_CLK 2
 
 void sleep(int sec);
-void setPin( int *reg, int pin, int status);
+void setPin( int *reg, unsigned int pin, int status);
 void initDisplay();
 void clear();
 void printRow(int data);

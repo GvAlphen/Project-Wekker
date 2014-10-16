@@ -14,5 +14,8 @@
 #include "RC5.h"
 #include "somGenerator.h"
 #include "display.h"
+#include "Alarm.h"
+
+void alarmState();
 
 #endif /* STATES_H_ */

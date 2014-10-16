@@ -8,9 +8,11 @@
 #include "states.h"
 
 void alarmState(){
+	int i;
+
 	char buff[2];
-	char inputTotNuToe[100];
-	int alarmCount = 1;
+	char inputTotNuToe[100] = "";
+	int alarmCount = 0;
 
 	char* strptr;
 	strptr = generateSom();
@@ -20,19 +22,18 @@ void alarmState(){
 
 	int answer = 9999;
 
-	char antwoordOpSomStr[5];
+	char antwoordOpSomStr[6];
 	strncpy(antwoordOpSomStr, som+6, 5);
 	int antwoordOpSom;
 	antwoordOpSom = atoi(antwoordOpSomStr);
 
 	int initialCommandCount;
-
 	int inputTotNuToeInt;
-
 	int newInput;
 
 	while(answer != antwoordOpSom){
-		//setAlarm(alarmCount);
+		alarmCount++;
+		setAlarm(alarmCount);
 
 		initialCommandCount = commandCount;
 
@@ -40,20 +41,32 @@ void alarmState(){
 			printToDisplay(som);
 		}
 
-		inputTotNuToeInt = getCommand(commandCount);
+		inputTotNuToeInt = getCommand(commandCount - 1);
 		sprintf(inputTotNuToe, "%d", inputTotNuToeInt);
 		initialCommandCount = commandCount;
 
 		//Change 9 to the value of an OK button
-		while(getCommand(commandCount) != 9){
+		while(getCommand(commandCount - 1) != 22){
 			printToDisplay(inputTotNuToe);
 			if(commandCount != initialCommandCount){
-				newInput = getCommand(commandCount);
-				sprintf(buff, "%d", newInput);
-				strcat(inputTotNuToe, buff);
-				initialCommandCount = commandCount;
+				if(getCommand(commandCount - 1) == 23){
+					//Removes the last char
+					inputTotNuToe[strlen(inputTotNuToe) - 1] = '\0';
+					initialCommandCount = commandCount;
+				} else if(getCommand(commandCount - 1) != 22) {
+					newInput = getCommand(commandCount - 1);
+					sprintf(buff, "%d", newInput);
+					strcat(inputTotNuToe, buff);
+					initialCommandCount = commandCount;
+				} else {
+					initialCommandCount = commandCount;
+				}
 			}
 		}
 		answer = atoi(inputTotNuToe);
+		for(i=0; i<5; i++){
+			inputTotNuToe[i] = '\0';
+		}
 	}
+	setAlarm(0);
 }

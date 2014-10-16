@@ -119,7 +119,7 @@ void EINT3_IRQHandler() {
 				}
 			}
 
-			if(currentToggle != lastToggle || commandCount == 0){
+			if((currentToggle != lastToggle || commandCount == 0) && count > 20){
 				realCommands[commandCount] = realCommand;
 				commandCount++;
 			}

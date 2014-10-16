@@ -25,35 +25,71 @@
 #include "somGenerator.h"
 #include "timer.h"
 #include "RC5.h"
+#include "states.h"
+#include "Alarm.h"
+#include "RTC.h"
+#include "Interrupts.h"
+
 // TODO: insert other definitions and declarations here
 
 
 int main(void) {
-	char buff[30];
-	int tmp;
+
+	char output[5];
+
 	initDisplay();
-//	initSomGenerator();
+	initSomGenerator();
 	initTimer0();
 	initRC5();
 	resetTimer0();
+	initRTC();
+	initRIT();
 
-//	char* strptr;
-//	char banaan[10];
-//	int a;
-//	strptr = generateSom();
-//
-//	strcpy(banaan, strptr);
-//	free(strptr);
-
-	//printf(banaan);
 	clear();
+
+
+	int arr2[3];
+	int arr[3] = {0x00, 0x50, 0x11};
+//	setTime(arr);
+    readTime(arr2, 0x00);
+
+
+//    printf("%d\n", arr2[0]);
+//    printf("%d\n", arr2[1]);
+//    printf("%d\n", arr2[2]);
+
+    sprintf(output, "%d:%d", arr2[2], arr2[1]);
+
 	while (1) {
+
+		printToDisplay(output);
+
+
+/*		if(initialCommandCount != commandCount){
+			sprintf(output, "%d", getCommand(commandCount - 1));
+
+			initialCommandCount = commandCount;
+		}
+
+		printToDisplay(output);*/
+	}
+	return 0;
+}
+
+//initRTC();
+//
+//int arr[3] = {0x30,0x16,0x16};
+//int arr2[2];
+//int arr3[3] = {0x44, 0x22, 0x01};
+//
+//// setTime(arr);
+//readTime(arr2, 0x01);
+////  writeRAM(arr3, 0x08);
+//readRAM(arr2, 0x08);
+
+
 /*		if(commandCount > 5){
 			tmp = getCommand(commandCount - 1);
 			sprintf(buff, "%d%d%d%d%d", tmp, tmp, tmp, tmp, tmp);
 			printToDisplay(buff);
 		}*/
-		printToDisplay("10101");
-	}
-	return 0;
-}
