@@ -15,7 +15,9 @@
 #include "somGenerator.h"
 #include "display.h"
 #include "Alarm.h"
+#include "ProjWek.h"
 
 void alarmState();
-
+void addAlarmState();
+void toggleAlarmState(char alarmBit);
 #endif /* STATES_H_ */

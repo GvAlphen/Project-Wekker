@@ -45,4 +45,6 @@ int BCDtoDec(int pointer);
 void writeRAM(int minHourAlarm[3], int adress);
 void readRAM(int arr2[3], int adress);
 
+void setAlarmBit(char alarmBit);
+void readAlarmBit(char alarmBit);
 #endif /* RTC_H_ */

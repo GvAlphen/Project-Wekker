@@ -70,3 +70,75 @@ void alarmState(){
 	}
 	setAlarm(0);
 }
+
+void addAlarmState(){
+	int initialCommandCount;
+	char hoursInput[20] = "";
+	char minuteInput[20] = "";
+	char toPrint[20] = "";
+	char defToPrint[20] = "";
+
+	char inputTotNuToe[100] = "";
+	int newInput;
+	char buff[5];
+
+	initialCommandCount = commandCount;
+
+	while(commandCount == initialCommandCount){
+		printToDisplay("00:00");
+	}
+
+	while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2){
+		printToDisplay(hoursInput);
+		if(commandCount != initialCommandCount){
+			if(getCommand(commandCount - 1) == 23){
+				//Removes the last char
+				hoursInput[strlen(hoursInput) - 1] = '\0';
+				initialCommandCount = commandCount;
+			} else if(getCommand(commandCount - 1) != 22) {
+				newInput = getCommand(commandCount - 1);
+				sprintf(buff, "%d", newInput);
+				strcat(hoursInput, buff);
+				initialCommandCount = commandCount;
+			} else {
+				initialCommandCount = commandCount;
+			}
+		}
+	}
+	strcat(toPrint, hoursInput);
+	strcat(toPrint, ":");
+	strcpy(defToPrint, toPrint);
+
+	while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2){
+		printToDisplay(toPrint);
+		if(commandCount != initialCommandCount){
+			if(getCommand(commandCount - 1) == 23){
+				//Removes the last char
+				minuteInput[strlen(minuteInput) - 1] = '\0';
+				strcpy(toPrint, defToPrint);
+				strcat(toPrint, minuteInput);
+				initialCommandCount = commandCount;
+			} else if(getCommand(commandCount - 1) != 22) {
+				newInput = getCommand(commandCount - 1);
+				sprintf(buff, "%d", newInput);
+				strcat(minuteInput, buff);
+				strcpy(toPrint, defToPrint);
+				strcat(toPrint, minuteInput);
+				initialCommandCount = commandCount;
+			} else {
+				initialCommandCount = commandCount;
+			}
+		}
+	}
+
+	//User confirmed both inputs
+	sprintf(buff, "%c%c:%c%c", hoursInput[0], hoursInput[1], minuteInput[0], minuteInput[1]);
+	setAlarmTime(buff);
+}
+
+
+void toggleAlarmState(char alarmBit){ // RAM-addres for alarm; on/off is 0x10
+	setAlarmBit(alarmBit);
+
+
+}

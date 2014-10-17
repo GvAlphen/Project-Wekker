@@ -57,7 +57,9 @@ void setMasterTransmitterMode()
 
 void readTime(int arr2[3], int adress)
 {
+	dataPointer = 0;
 	bytesToSend = 0;
+	bytesToReceive = 3;
 	regAdress = adress;
 	reading = 1;
 	setMasterTransmitterMode();
@@ -74,12 +76,18 @@ void readTime(int arr2[3], int adress)
 	}
 }
 
-void readRAM(int arr2[2], int adress)
+
+
+void readRAM(int arr2[3], int adress)
 {
+	dataPointer = 0;
+	timePointer = 0;
 	bytesToReceive = 3;
 	reading = 1;
 	regAdress = adress;
+	dataRead = 0;
 	setMasterTransmitterMode();
+
 	while (dataRead == 0)
 	{
 
@@ -89,11 +97,33 @@ void readRAM(int arr2[2], int adress)
 //		showData();
 		arr2[0] = BCDtoDec(0);
 		arr2[1] = BCDtoDec(1);
+		arr2[2] = data[2];
+	}
+}
+
+void readAlarmBit(char alarmBit){
+	timePointer = 0;
+	dataPointer = 0;
+	dataRead = 0;
+	regAdress = 0x10;
+	bytesToSend = 0;
+	reading = 1;
+	bytesToReceive = 1;
+	setMasterTransmitterMode();
+
+	while (dataRead == 0)
+	{
+
+	}
+	if (dataRead == 1)
+	{
+		alarmBit = data[0];
 	}
 }
 
 void setTime(int secMinHour[3])
 {
+	reading = 0;
 	bytesToSend = 3;
 	timeOfRTC[0] = secMinHour[0];
 	timeOfRTC[1] = secMinHour[1];
@@ -103,13 +133,34 @@ void setTime(int secMinHour[3])
 
 void writeRAM(int minHourAlarm[3], int adress)
 {
+	reading = 0;
+	timePointer = 0;
+	dataPointer = 0;
+
 	regAdress = adress;
 	bytesToSend = 3;
 	timeOfRTC[0] = minHourAlarm[0];
 	timeOfRTC[1] = minHourAlarm[1];
 	timeOfRTC[2] = minHourAlarm[2];
+
+
+
 	setMasterTransmitterMode();
 }
+
+void setAlarmBit(char alarmBit){ // writes to RAM
+	reading = 0;
+	timePointer = 0;
+	dataPointer = 0;
+
+	regAdress = 0x10;
+	bytesToSend = 1;
+	timeOfRTC[0] = alarmBit;
+
+
+	setMasterTransmitterMode();
+}
+
 
 void startCondition()
 {
@@ -135,6 +186,7 @@ void showData()
 
 int BCDtoDec(int pointer)
 {
+	//if (data[pointer] > 0x3F)
 	int returnTime = 0;
 	returnTime += (data[pointer] & 0x0F);
 	if (pointer < 2)
