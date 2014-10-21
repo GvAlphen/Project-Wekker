@@ -42,7 +42,9 @@ void alarmState(){
 		}
 
 		inputTotNuToeInt = getCommand(commandCount - 1);
-		sprintf(inputTotNuToe, "%d", inputTotNuToeInt);
+		inputTotNuToe[0] = (inputTotNuToeInt / 10) + '0';
+		inputTotNuToe[0] = (inputTotNuToeInt % 10) + '0';
+		inputTotNuToe[1] = '\0';
 		initialCommandCount = commandCount;
 
 		//Change 9 to the value of an OK button
@@ -55,7 +57,8 @@ void alarmState(){
 					initialCommandCount = commandCount;
 				} else if(getCommand(commandCount - 1) != 22) {
 					newInput = getCommand(commandCount - 1);
-					sprintf(buff, "%d", newInput);
+					buff[0] = (newInput % 10) + '0';
+					buff[1] = '\0';
 					strcat(inputTotNuToe, buff);
 					initialCommandCount = commandCount;
 				} else {
@@ -78,7 +81,7 @@ void addAlarmState(){
 	char toPrint[20] = "";
 	char defToPrint[20] = "";
 
-	//char inputTotNuToe[100] = "";
+	char inputTotNuToe[100] = "";
 	int newInput;
 	char buff[5];
 
@@ -97,7 +100,8 @@ void addAlarmState(){
 				initialCommandCount = commandCount;
 			} else if(getCommand(commandCount - 1) != 22) {
 				newInput = getCommand(commandCount - 1);
-				sprintf(buff, "%d", newInput);
+				buff[0] = (newInput % 10) + '0';
+				buff[1] = '\0';
 				strcat(hoursInput, buff);
 				initialCommandCount = commandCount;
 			} else {
@@ -120,7 +124,8 @@ void addAlarmState(){
 				initialCommandCount = commandCount;
 			} else if(getCommand(commandCount - 1) != 22) {
 				newInput = getCommand(commandCount - 1);
-				sprintf(buff, "%d", newInput);
+				buff[0] = (newInput % 10) + '0';
+				buff[1] = '\0';
 				strcat(minuteInput, buff);
 				strcpy(toPrint, defToPrint);
 				strcat(toPrint, minuteInput);
@@ -132,11 +137,17 @@ void addAlarmState(){
 	}
 
 	//User confirmed both inputs
-	sprintf(buff, "%c%c:%c%c", hoursInput[0], hoursInput[1], minuteInput[0], minuteInput[1]);
+	buff[0] = hoursInput[0];
+	buff[1] = hoursInput[1];
+	buff[2] = ':';
+	buff[3] = minuteInput[0];
+	buff[4] = minuteInput[1];
 	setAlarmTime(buff);
 }
 
-//Redundant
+
 void toggleAlarmState(char alarmBit){ // RAM-addres for alarm; on/off is 0x10
 	setAlarmBit(alarmBit);
+
+
 }
