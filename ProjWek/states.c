@@ -78,7 +78,7 @@ void addAlarmState(){
 	char toPrint[20] = "";
 	char defToPrint[20] = "";
 
-	//char inputTotNuToe[100] = "";
+	char inputTotNuToe[100] = "";
 	int newInput;
 	char buff[5];
 
@@ -136,7 +136,9 @@ void addAlarmState(){
 	setAlarmTime(buff);
 }
 
-//Redundant
+
 void toggleAlarmState(char alarmBit){ // RAM-addres for alarm; on/off is 0x10
 	setAlarmBit(alarmBit);
+
+
 }

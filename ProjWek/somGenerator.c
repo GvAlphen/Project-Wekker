@@ -51,26 +51,19 @@ char* generateSom(){
 		break;
 	}
 
-	num1buff[0] = firstNum / 10;
-	num1buff[1] = firstNum % 10;
-	num1buff[2] = '\0';
+	if(firstNum < 10){
+		sprintf(num1buff, "0%d", firstNum);
+	} else {
+		sprintf(num1buff, "%d", firstNum);
+	}
 
-	num2buff[0] = secondNum / 10;
-	num2buff[1] = secondNum % 10;
-	num2buff[2] = '\0';
+	if(secondNum < 10){
+		sprintf(num2buff, "0%d", secondNum);
+	} else {
+		sprintf(num2buff, "%d", secondNum);
+	}
 
-	buff[0] = (firstNum / 10) + '0';
-	buff[1] = (firstNum % 10) + '0';
-	buff[2] = op;
-	buff[3] = (secondNum / 10) + '0';
-	buff[4] = (secondNum % 10) + '0';
-	buff[5] = '=';
-	buff[6] = answer / 1000 + '0';
-	buff[7] = ((answer % 1000) / 100) + '0';
-	buff[8] = ((answer % 100) / 10) + '0';
-	buff[9] = (answer % 10) + '0';
-	buff[10] = '\0';
-
+	sprintf(buff, "%s%c%s=%d", num1buff, op, num2buff, answer);
 	strncpy(som, buff, 11);
 	return som;
 }

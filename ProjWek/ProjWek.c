@@ -51,15 +51,6 @@ int main(void) {
 	int lastAlarmToggle = 0;
 
 	char alarmBit;
-
-	//////////////////////////////////
-	char* test = generateSom();
-	char som[10];
-	strcpy(som, test);
-	free(test);
-
-	//////////////////////////////////
-
 //	char arr[3];
 //	readRAM(arr, 0x08);
 //	delay(500);
@@ -69,10 +60,10 @@ int main(void) {
 
 
 	int arr2[3];
- 	//int arr[3] = {0x00, 0x24, 0x12};
-	//setTime(arr);
+// 	int arr[3] = {0x00, 0x51, 0x10};
+//	setTime(arr);
 
-	readTime(arr2, 0x00);
+ 	readTime(arr2, 0x00);
  	if(arr2[2] < 10){
  		sprintf(buff1, "0%d", arr2[2]);
  	} else {
@@ -95,27 +86,25 @@ int main(void) {
 //    printf("%d\n", arr2[0]);
 //    printf("%d\n", arr2[1]);
 //    printf("%d\n", arr2[2]);
-	//Main loop
+
 	while (1) {
 
-
+		//Main loop
 		while (!isTimeForAlarm(alarmBit) && (getCommand(commandCount - 1) != 15 && getCommand(commandCount - 1) != 11)) {
-			//This is the main loop, all we do here is print the current time to the display since the current time is updated through the RIT and the EINT takes care of the remote control
 			//Prints the current time
 			printToDisplay(output);
 		}
 
 		if (getCommand(commandCount - 1) == 15) {
-			//Goes into the set alarm state
 			addAlarmState();
 		}
 
 		if (getCommand(commandCount - 1) == 11 && commandCount != lastAlarmToggle) { // '11' needs to be replaced with an other number, because it's an temporary button
-			//Toggle alar state
+
 			alarmBit = !alarmBit;
 			toggleAlarmState(alarmBit);
 			lastAlarmToggle = commandCount;
-			//Give the user some feedback(Tell them wether they set or unset the alarm)
+			//Give the user some feedback
 			for(i=0; i<200; i++){
 				asm("nop");
 				if(alarmBit == 1){
@@ -128,12 +117,21 @@ int main(void) {
 		}
 
 		if (isTimeForAlarm(alarmBit)) {
-			//Goes into the alarm state
 			alarmState();
 			resetAlarmTime();
 
 		}
+
 		printToDisplay(output);
+
+
+		/*		if(initialCommandCount != commandCount){
+		 sprintf(output, "%d", getCommand(commandCount - 1));
+
+		 initialCommandCount = commandCount;
+		 }
+
+		 printToDisplay(output);*/
 	}
 	return 0;
 }
@@ -184,4 +182,21 @@ void setPriorities(){
 	IPR3 |= ( 1 << 6);
 	IPR5 |= ( 1 << 11);
 	IPR7 |= ( 1 << 13);
+
 }
+//initRTC();
+//
+//int arr[3] = {0x30,0x16,0x16};
+//int arr2[2];
+//int arr3[3] = {0x44, 0x22, 0x01};
+//
+//// setTime(arr);
+//readTime(arr2, 0x01);
+////  writeRAM(arr3, 0x08);
+//readRAM(arr2, 0x08);
+
+/*		if(commandCount > 5){
+ tmp = getCommand(commandCount - 1);
+ sprintf(buff, "%d%d%d%d%d", tmp, tmp, tmp, tmp, tmp);
+ printToDisplay(buff);
+ }*/

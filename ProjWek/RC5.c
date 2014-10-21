@@ -8,6 +8,11 @@
 #include "RC5.h"
 #include "timer.h"
 
+static short message = 0x0000;
+static char RC5rising = 0;
+static char RC5middle = 1;
+static int messageLocation = 13;
+
 int interrupt = 0;
 int commandCount = 0;
 
@@ -132,6 +137,62 @@ void EINT3_IRQHandler() {
 	__asm("nop");
 	__asm("nop");
 	//# end reset
+
+
+
+/*
+	 int timer = readTimer0();
+
+	 test[interrupt] = timer;
+	 interrupt++;
+
+	 resetTimer0();
+
+	 IO2IntClr |= (1 << 6);
+	 __asm("nop");
+	 __asm("nop");
+	 //# end reset
+*/
+
+
+	/*	int timer = readTimer0();
+
+	 RC5rising = !RC5rising;
+
+	 // timer around 889 uSec
+	 if (timer > 700 && timer < 1100 && messageLocation != 13) {
+	 RC5middle = !RC5middle;
+	 }
+
+	 if (RC5rising && RC5middle) {
+	 message |= 1 << messageLocation--;
+	 } else if (!RC5rising && RC5middle) {
+	 message &= ~(1 << messageLocation--);
+	 }
+
+	 if (messageLocation == -1) {
+	 // invert message since IR receiver is inverted
+	 int command = getCommand(message) - 1;
+
+	 test[commandCount] = command;
+	 commandCount++;
+
+	 //sleep(1);
+	 interrupt = 0;
+	 messageLocation = 13;
+	 RC5rising = 0;
+	 RC5middle = 1;
+	 message = 0x0000;
+	 }
+
+	 interrupt++;
+
+	 // Reset Interrupt
+	 IO2IntClr |= (1 << 6);
+	 __asm("nop");
+	 __asm("nop");
+	 //# end reset
+	 resetTimer0();*/
 }
 
 int getCommand(int pos){
