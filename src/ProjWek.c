@@ -40,7 +40,6 @@ int main(void) {
 	int buff1[2];
 	int buff2[2];
 	initDisplay();
-	initSomGenerator();
 	initTimer0();
 	initRC5();
 	resetTimer0();
@@ -76,6 +75,9 @@ int main(void) {
 	lastValues[0] = arr2[0];
 	lastValues[1] = arr2[1];
 	lastValues[2] = arr2[2];
+
+	//Give the RNG a seed to work with (sec * minutes * hours)
+	initSomGenerator(arr2[0] * arr2[1] * arr2[2]);
 
 	setAlarm(2);
 

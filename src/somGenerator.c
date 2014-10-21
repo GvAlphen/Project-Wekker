@@ -19,8 +19,6 @@
 char* generateSom(){
 	char op = randomOperator();
 	char buff[11];
-	char num1buff[3];
-	char num2buff[3];
 	char* som = malloc(sizeof(char) * 11);
 
 	int firstNum = randomNum(0, 99);
@@ -51,13 +49,7 @@ char* generateSom(){
 		break;
 	}
 
-	num1buff[0] = firstNum / 10;
-	num1buff[1] = firstNum % 10;
-	num1buff[2] = '\0';
 
-	num2buff[0] = secondNum / 10;
-	num2buff[1] = secondNum % 10;
-	num2buff[2] = '\0';
 
 	buff[0] = (firstNum / 10) + '0';
 	buff[1] = (firstNum % 10) + '0';
@@ -81,8 +73,8 @@ char randomOperator(){
 }
 
 //Gives the RNG a seed to work with
-void initSomGenerator(){
-	srand((unsigned int)time(NULL));
+void initSomGenerator(int seed){
+	srand(seed);
 }
 
 //Returns an int between the min and max values

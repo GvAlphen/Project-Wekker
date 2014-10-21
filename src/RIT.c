@@ -28,47 +28,49 @@ void RIT_IRQHandler(){
 	delay(20);
 	readTime(array, 0x00);
 //	delay(20);
-	//Add 0s at the start if the number is below 10
-	if(array[2] < 10){
-		sprintf(buff2, "0%d", array[2]);
-	} else {
-		sprintf(buff2, "%d", array[2]);
-	}
 
-	if(array[1] < 10){
-		sprintf(buff1, "0%d", array[1]);
-	} else {
-		sprintf(buff1, "%d", array[1]);
-	}
+	//Make the values from the array into 0 formatted strings
+	buff2[0] = (array[2] / 10) + '0';
+	buff2[1] = (array[2] % 10) + '0';
+	buff2[2] = '\0';
 
-	if(lastValues[2] < 10){
-		sprintf(lvbuff2, "0%d", lastValues[2]);
-	} else {
-		sprintf(lvbuff2, "%d", lastValues[2]);
-	}
+	buff1[0] = (array[1] / 10) + '0';
+	buff1[1] = (array[1] % 10) + '0';
+	buff1[2] = '\0';
 
-	if(lastValues[1] < 10){
-		sprintf(lvbuff1, "0%d", lastValues[1]);
-	} else {
-		sprintf(lvbuff1, "%d", lastValues[1]);
-	}
+	lvbuff2[0] = (lastValues[2] / 10) + '0';
+	lvbuff2[1] = (lastValues[2] % 10) + '0';
+	lvbuff2[2] = '\0';
+
+	lvbuff1[0] = (lastValues[1] / 10) + '0';
+	lvbuff1[1] = (lastValues[1] % 10) + '0';
+	lvbuff1[2] = '\0';
 
 	//Pretty much validates what was read from the RTC to be reasonable values
 	if((array[2] == lastValues[2] + 1 ) || array[2] == 0){
 		if((array[1] == lastValues[1] + 1) || array[1] == 0){
-			sprintf(tmp, "%s:%s", buff2, buff1);
+			strcpy(tmp, buff2);
+			strcat(tmp, ":");
+			strcat(tmp, buff1);
 			lastValues[1] = array[1];
 			lastValues[2] = array[2];
 		} else {
-			sprintf(tmp, "%s:%s", buff1, lvbuff1);
+			//Was 1, 1 (Wrong?)
+			strcpy(tmp, buff2);
+			strcat(tmp, ":");
+			strcat(tmp, lvbuff1);
 			lastValues[2] = array[2];
 		}
 	} else {
 		if((array[1] == lastValues[1] + 1) || array[1] == 0){
-			sprintf(tmp, "%s:%s", lvbuff2, buff1);
+			strcpy(tmp, lvbuff2);
+			strcat(tmp, ":");
+			strcat(tmp, buff1);
 			lastValues[1] = array[1];
 		} else {
-			sprintf(tmp, "%s:%s", lvbuff2, lvbuff1);
+			strcpy(tmp, lvbuff2);
+			strcat(tmp, ":");
+			strcat(tmp, lvbuff1);
 		}
 	}
 
