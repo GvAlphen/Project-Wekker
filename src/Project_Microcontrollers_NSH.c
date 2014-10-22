@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <string.h>
 // TODO: insert other include files here
-#include "ProjWek.h"
+#include "Project_Microcontrollers_NSH.h"
 #include "display.h"
 #include "somGenerator.h"
 #include "timer.h"
@@ -59,9 +59,9 @@ int main(void) {
 
 
 	int arr2[3];
-// 	int arr[3] = {0x00, 0x51, 0x10};
+// 	int arr[3] = {0x00, 0x00, 0x12};
 //	setTime(arr);
-//
+
 
  	readTime(arr2, 0x00); // arr2[] = { sec , min, hour}
 

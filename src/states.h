@@ -15,7 +15,7 @@
 #include "somGenerator.h"
 #include "display.h"
 #include "Alarm.h"
-#include "ProjWek.h"
+#include "Project_Microcontrollers_NSH.h"
 
 void alarmState();
 void addAlarmState();
