@@ -20,6 +20,8 @@ void alarmState(){
 	strcpy(som, strptr);
 	free(strptr);
 
+	int toWrite[2];
+
 	int answer = 9999;
 
 	char antwoordOpSomStr[6];
@@ -70,7 +72,12 @@ void alarmState(){
 		for(i=0; i<5; i++){
 			inputTotNuToe[i] = '\0';
 		}
-	}
+	}//Set the alarm time inside the RTC on an unreachable value
+	toWrite[0] = 0x99;
+	toWrite[1] = 0x99;
+
+	setRAMtime(toWrite);
+
 	setAlarm(0);
 }
 
