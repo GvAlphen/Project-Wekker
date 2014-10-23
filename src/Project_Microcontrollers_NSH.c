@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <string.h>
 // TODO: insert other include files here
-#include "ProjWek.h"
+#include "Project_Microcontrollers_NSH.h"
 #include "display.h"
 #include "somGenerator.h"
 #include "timer.h"
@@ -49,21 +49,21 @@ int main(void) {
 
 	int lastAlarmToggle = 0;
 
+	//Read stuff from RAM and put it in our program's variables
 	char alarmBit;
-//	char arr[3];
-//	readRAM(arr, 0x08);
-//	delay(500);
-//	alarmBit = arr[2];
-//	clear();
+	readAlarmBit(&alarmBit);
 
-
+	int arr[2];
+	readRAMtime(arr);
+	alarmTime[0] = arr[1]/10 + '0';
+	alarmTime[1] = arr[1]%10 + '0';
+	alarmTime[2] = ':';
+	alarmTime[3] = arr[0]/10 + '0';
+	alarmTime[4] = arr[0]%10 + '0';
 
 	int arr2[3];
-// 	int arr[3] = {0x00, 0x51, 0x10};
-//	setTime(arr);
-//
 
- 	readTime(arr2, 0x00); // arr2[] = { sec , min, hour}
+ 	readTime(arr2); // arr2[] = { sec , min, hour}
 
  	output[0] = (arr2[2] / 10) + '0';
  	output[1] = (arr2[2] % 10) + '0';
@@ -79,12 +79,10 @@ int main(void) {
 	//Give the RNG a seed to work with (sec * minutes * hours)
 	initSomGenerator(arr2[0] * arr2[1] * arr2[2]);
 
-	setAlarm(2);
-
 	while (1) {
 
 		//Main loop
-		while (!isTimeForAlarm(alarmBit) && (getCommand(commandCount - 1) != 15 && getCommand(commandCount - 1) != 11)) {
+		while (!isTimeForAlarm(alarmBit) && (getCommand(commandCount - 1) != 15 && getCommand(commandCount - 1) != 11 && getCommand(commandCount - 1) != 13)) {
 			//Prints the current time
 			printToDisplay(output);
 		}
@@ -98,6 +96,7 @@ int main(void) {
 			alarmBit = !alarmBit;
 			toggleAlarmState(alarmBit);
 			lastAlarmToggle = commandCount;
+			setAlarmBit(alarmBit);
 			//Give the user some feedback
 			for(i=0; i<200; i++){
 				asm("nop");
@@ -106,14 +105,15 @@ int main(void) {
 				} else {
 					printToDisplay("  -  ");
 				}
-
 			}
 		}
 
 		if (isTimeForAlarm(alarmBit)) {
 			alarmState();
 			resetAlarmTime();
-
+		}
+		if (getCommand(commandCount - 1) == 13){ // AANPASSEN!!!!!!!
+			setTimeState();
 		}
 
 		printToDisplay(output);
@@ -165,9 +165,9 @@ void resetAlarmTime(){
 }
 
 void setPriorities(){
-	IPR3 |= ( 1 << 6);
+	IPR3 |= ( 1 << 5);
 	IPR5 |= ( 1 << 11);
-	IPR7 |= ( 1 << 13);
+	IPR7 |= ( 1 << 14);
 
 }
 //initRTC();

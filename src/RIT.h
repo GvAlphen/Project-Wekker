@@ -9,7 +9,7 @@
 #define RIT_H_
 
 #include "RTC.h"
-#include "ProjWek.h"
+#include "Project_Microcontrollers_NSH.h"
 #include "timer.h"
 
 #define PCONP 		(* (unsigned int *) 0x400FC0C4)

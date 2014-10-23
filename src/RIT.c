@@ -26,7 +26,7 @@ void RIT_IRQHandler(){
 	char lvbuff1[3];
 	char lvbuff2[3];
 	delay(20);
-	readTime(array, 0x00);
+	readTime(array);
 //	delay(20);
 
 	//Make the values from the array into 0 formatted strings

@@ -8,15 +8,16 @@
 #include "RTC.h"
 
 int bytesToSend = 0;
-int bytesToReceive = 3;
-unsigned char data[3];
-unsigned char timeOfRTC[3];
-int timePointer = 0;
-int dataPointer = 0;
+int bytesToReceive = 0;
+unsigned char receiveBuffer[3];
+unsigned char transmitBuffer[3];
+int transmitPointer = 0;
+int receivePointer = 0;
 int reading = 0;
 int dataRead = 0;
 int rw = 0;
 int regAdress = 0;
+int busy = 0;
 
 void initRTC()
 {
@@ -26,26 +27,26 @@ void initRTC()
 	PINSEL0 |= 0xA00000;	//select SDA2 0.10, SCL2 0.11
 	PINMODE0 |= 0xA00000;	//set as neither pull up/down
 	PINMODE_OD0 |= 0xC00;	//set as open drain mode
-//
+
 	I2C2CONSET |= 0x40;		//bit 6 enable i2c interface
 
-	I2SCLH = 0xA;
-	I2SCLL = 0xA;
+	I2SCLH = 0xA;			//set clock pulse high time
+	I2SCLL = 0xA;			//set clock pulse low time
 }
 
-void initRTCzzz()
+void initRTCI2C1()
 {
-	PCONP |= 0x80000; 		//i2c interface enables on reset -> bit 19 = 1
-	ISER0 |= 0x800;			//enable I2C2 interrupt
-	PCLKSEL1 |=  0xC0; 		//peripheral clock selection for I2C2
-	PINSEL0 |= 0xF;			//select SDA2 0.10, SCL2 0.11
+	PCONP |= 0x80000; 		//I2C1 interface enables on reset -> bit 19 = 1
+	ISER0 |= 0x800;			//enable I2C1 interrupt
+	PCLKSEL1 |=  0xC0; 		//peripheral clock selection for I2C1
+	PINSEL0 |= 0xF;			//select SDA1 0.0, SCL1 0.1
 	PINMODE0 |= 0xA;		//set as neither pull up/down
 	PINMODE_OD0 |= 0x3;		//set as open drain mode
 
-	I2C2CONSET |= 0x40;		//bit 6 enable i2c interface
+	I2C2CONSET |= 0x40;		//bit 6 enable I2C1 interface
 
-	I2SCLH = 0xA;
-	I2SCLL = 0xA;
+	I2SCLH = 0xA;			//set clock pulse high time
+	I2SCLL = 0xA;			//set clock pulse low time
 }
 
 void setMasterTransmitterMode()
@@ -55,116 +56,167 @@ void setMasterTransmitterMode()
 	I2C2CONSET |= STA_FLAG; //set start flag
 }
 
-void readTime(int arr2[3], int adress)
+void setMasterReceiverMode()
 {
-	dataPointer = 0;
-	bytesToSend = 0;
-	bytesToReceive = 3;
-	regAdress = adress;
 	reading = 1;
 	setMasterTransmitterMode();
-	while (dataRead == 0)
+}
+
+void readTime(int arr2[3])
+{
+	while (busy == 1)
 	{
 
 	}
-	if (dataRead == 1)
+	if (busy == 0)
 	{
-//		showData();
-		arr2[0] = BCDtoDec(0);
-		arr2[1] = BCDtoDec(1);
-		arr2[2] = BCDtoDec(2);
+		busy = 1;
+		transmitPointer = 0;
+		receivePointer = 0;
+		bytesToSend = 0;
+
+		bytesToReceive = 3;
+		regAdress = 0x00;
+		dataRead = 0;
+		setMasterReceiverMode();
+		while (dataRead == 0)
+		{
+
+		}
+		if (dataRead == 1)
+		{
+			arr2[0] = BCDtoDec(0);
+			arr2[1] = BCDtoDec(1);
+			arr2[2] = BCDtoDec(2);
+		}
 	}
 }
 
-
-
-void readRAM(int arr2[3], int adress)
+void readRAMtime(int arr2[2])
 {
-	dataPointer = 0;
-	timePointer = 0;
-	bytesToReceive = 3;
-	reading = 1;
-	regAdress = adress;
-	dataRead = 0;
-	setMasterTransmitterMode();
-
-	while (dataRead == 0)
+	while (busy == 1)
 	{
 
 	}
-	if (dataRead == 1)
+	if (busy == 0)
 	{
-//		showData();
-		arr2[0] = BCDtoDec(0);
-		arr2[1] = BCDtoDec(1);
-		arr2[2] = data[2];
+		busy = 1;
+		dataRead = 0;
+		transmitPointer = 0;
+		receivePointer = 0;
+		bytesToSend = 0;
+
+		bytesToReceive = 2;
+		regAdress = 0x08;
+		setMasterReceiverMode();
+		while (dataRead == 0)
+		{
+
+		}
+		if (dataRead == 1)
+		{
+			arr2[0] = BCDtoDec(0);
+			receiveBuffer[2] = receiveBuffer[1];
+			arr2[1] = BCDtoDec(2);
+			int test = arr2[1];
+			asm("nop");
+		}
 	}
 }
 
-void readAlarmBit(char alarmBit){
-	timePointer = 0;
-	dataPointer = 0;
-	dataRead = 0;
-	regAdress = 0x10;
-	bytesToSend = 0;
-	reading = 1;
-	bytesToReceive = 1;
-	setMasterTransmitterMode();
-
-	while (dataRead == 0)
+void readAlarmBit(char *alarmBit)
+{
+	while (busy == 1)
 	{
 
 	}
-	if (dataRead == 1)
+	if (busy == 0)
 	{
-		alarmBit = data[0];
+		busy = 1;
+		dataRead = 0;
+		transmitPointer = 0;
+		receivePointer = 0;
+		bytesToSend = 0;
+
+		bytesToReceive = 1;
+		regAdress = 0x10;
+		setMasterReceiverMode();
+
+		while (dataRead == 0)
+		{
+
+		}
+		if (dataRead == 1)
+		{
+			*alarmBit = receiveBuffer[0];
+		}
 	}
 }
 
 void setTime(int secMinHour[3])
 {
-	reading = 0;
-	bytesToSend = 3;
-	timeOfRTC[0] = secMinHour[0];
-	timeOfRTC[1] = secMinHour[1];
-	timeOfRTC[2] = secMinHour[2];
-	setMasterTransmitterMode();
+	while (busy == 1)
+	{
+
+	}
+	if (busy == 0)
+	{
+		busy = 1;
+		reading = 0;
+		transmitPointer = 0;
+		receivePointer = 0;
+		bytesToReceive = 0;
+
+		bytesToSend = 3;
+		regAdress = 0x00;
+		transmitBuffer[0] = secMinHour[0];
+		transmitBuffer[1] = secMinHour[1];
+		transmitBuffer[2] = secMinHour[2];
+		setMasterTransmitterMode();
+	}
 }
 
-void writeRAM(int minHourAlarm[3], int adress)
+void setRAMtime(int minHour[2])
 {
-	reading = 0;
-	timePointer = 0;
-	dataPointer = 0;
+	while (busy == 1)
+	{
 
-	regAdress = adress;
-	bytesToSend = 3;
-	timeOfRTC[0] = minHourAlarm[0];
-	timeOfRTC[1] = minHourAlarm[1];
-	timeOfRTC[2] = minHourAlarm[2];
+	}
+	if (busy == 0)
+	{
+		busy = 1;
+		reading = 0;
+		transmitPointer = 0;
+		receivePointer = 0;
+		bytesToReceive = 0;
 
-
-
-	setMasterTransmitterMode();
+		bytesToSend = 2;
+		regAdress = 0x08;
+		transmitBuffer[0] = minHour[0];
+		transmitBuffer[1] = minHour[1];
+		setMasterTransmitterMode();
+	}
 }
 
-void setAlarmBit(char alarmBit){ // writes to RAM
-	reading = 0;
-	timePointer = 0;
-	dataPointer = 0;
+void setAlarmBit(char alarmBit)
+{ // writes to RAM
+	while (busy == 1)
+	{
 
-	regAdress = 0x10;
-	bytesToSend = 1;
-	timeOfRTC[0] = alarmBit;
+	}
+	if (busy == 0)
+	{
+		busy = 1;
+		reading = 0;
+		transmitPointer = 0;
+		receivePointer = 0;
+		bytesToReceive = 0;
 
-
-	setMasterTransmitterMode();
-}
-
-
-void startCondition()
-{
-	I2C2CONSET |= STA_FLAG; 	//add start flag
+		bytesToSend = 1;
+		regAdress = 0x10;
+		transmitBuffer[0] = alarmBit;
+		setMasterTransmitterMode();
+	}
 }
 
 void writeSlaveAdress()
@@ -172,31 +224,24 @@ void writeSlaveAdress()
 	I2C2DAT = (0xD0 | rw);
 }
 
-void writeData(int dat)
+void writeByte(int byte)
 {
-	I2C2DAT = dat;
-}
-
-void showData()
-{
-	printf("%x\n", data[0]);
-	printf("%x\n", data[1]);
-	printf("%x\n", data[2]);
+	I2C2DAT = byte;
 }
 
 int BCDtoDec(int pointer)
 {
 	//if (data[pointer] > 0x3F)
 	int returnTime = 0;
-	returnTime += (data[pointer] & 0x0F);
+	returnTime += (receiveBuffer[pointer] & 0x0F);
 	if (pointer < 2)
 	{
 		//data[pointer] >>= 4;
-		returnTime += (((data[pointer] >> 4) & 0x7) * 10);
+		returnTime += (((receiveBuffer[pointer] >> 4) & 0x7) * 10);
 	}
 	else
 	{
-		returnTime += (((data[pointer] >> 4) & 0x3) * 10);
+		returnTime += (((receiveBuffer[pointer] >> 4) & 0x3) * 10);
 	}
 	return returnTime;
 }
@@ -224,7 +269,7 @@ void I2C2_IRQHandler()
 	}
 
 	else if (I2C2STAT == 0x18)
-	{//transmit first databyte
+	{//transmit first data byte
 
 		I2C2DAT = regAdress; //reg adress
 		//I2C2CONSET = STA_FLAG;
@@ -252,48 +297,51 @@ void I2C2_IRQHandler()
 			{
 				I2C2CONSET = 0x10; //stop
 				I2C2CONCLR = SI_FLAG;
+				busy = 0;
 			}
 		}
 		else
 		{
-			writeData(timeOfRTC[timePointer]);
-			timePointer++;
+			writeByte(transmitBuffer[transmitPointer]);
+			transmitPointer++;
 			bytesToSend--;
 			I2C2CONCLR = SI_FLAG;
 		}
 	}
 	else if (I2C2STAT == 0x30)
-	{
+	{//data transmitted, NOT ACK received
 		I2C2CONSET = 0x14;
 		I2C2CONCLR = SI_FLAG;
+		busy = 0;
 	}
 
 	else if (I2C2STAT == 0x38)
-	{
+	{//arbitration lost during transmission
 		I2C2CONSET = 0x24;
 		I2C2CONCLR = 0x08;
 	}
 
 /////////////////////////////////// receiver states
 	else if (I2C2STAT == 0x40)
-	{
+	{//slave address+read transmitted, ACK received
 		I2C2CONSET = 0x04;
 		I2C2CONCLR = SI_FLAG;
 		bytesToReceive--;
 	}
 
 	else if (I2C2STAT == 0x48)
-	{
+	{//slave address+read transmitted, NOT ACK received
 		I2C2CONSET = 0x14;
 		I2C2CONCLR = SI_FLAG;
+		busy = 0;
 	}
 
 	else if (I2C2STAT == 0x50)
-	{
-		data[dataPointer] = I2C2DAT;
-		dataPointer++;
+	{//data byte received, ACK returned
+		receiveBuffer[receivePointer] = I2C2DAT;
+		receivePointer++;
 		bytesToReceive--;
-		if (bytesToReceive == 0)
+		if (bytesToReceive < 1)
 		{
 			I2C2CONCLR = 0x0C;
 		}
@@ -305,11 +353,12 @@ void I2C2_IRQHandler()
 	}
 
 	else if (I2C2STAT == 0x58)
-	{
-		data[dataPointer] = I2C2DAT;
+	{//last data byte received
+		receiveBuffer[receivePointer] = I2C2DAT;
 		I2C2CONSET = 0x14;
 		I2C2CONCLR = SI_FLAG;
 		dataRead = 1;
+		busy = 0;
 	}
 
 	else{I2C2CONCLR = SI_FLAG;}
