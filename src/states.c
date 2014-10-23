@@ -151,3 +151,107 @@ void toggleAlarmState(char alarmBit){ // RAM-addres for alarm; on/off is 0x10
 
 
 }
+
+void setTimeState(){
+
+	int initialCommandCount;
+		char hoursInput[20] = "";
+		char minuteInput[20] = "";
+
+		int hours;
+		int minutes;
+
+		char toPrint[20] = "";
+		char defToPrint[20] = "";
+
+		char inputTotNuToe[100] = "";
+		int newInput;
+		char buff[5];
+		int timeArray[3];
+
+		initialCommandCount = commandCount;
+
+		while(commandCount == initialCommandCount){
+			printToDisplay("00:00");
+		}
+
+		while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2){
+			printToDisplay(hoursInput);
+			if(commandCount != initialCommandCount){
+				if(getCommand(commandCount - 1) == 23){
+					//Removes the last char
+					hoursInput[strlen(hoursInput) - 1] = '\0';
+					initialCommandCount = commandCount;
+				} else if(getCommand(commandCount - 1) != 22) {
+					newInput = getCommand(commandCount - 1);
+					buff[0] = (newInput % 10) + '0';
+					buff[1] = '\0';
+					strcat(hoursInput, buff);
+					initialCommandCount = commandCount;
+				} else {
+					initialCommandCount = commandCount;
+				}
+			}
+		}
+		strcat(toPrint, hoursInput);
+		strcat(toPrint, ":");
+		strcpy(defToPrint, toPrint);
+
+		while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2){
+			printToDisplay(toPrint);
+			if(commandCount != initialCommandCount){
+				if(getCommand(commandCount - 1) == 23){
+					//Removes the last char
+					minuteInput[strlen(minuteInput) - 1] = '\0';
+					strcpy(toPrint, defToPrint);
+					strcat(toPrint, minuteInput);
+					initialCommandCount = commandCount;
+				} else if(getCommand(commandCount - 1) != 22) {
+					newInput = getCommand(commandCount - 1);
+					buff[0] = (newInput % 10) + '0';
+					buff[1] = '\0';
+					strcat(minuteInput, buff);
+					strcpy(toPrint, defToPrint);
+					strcat(toPrint, minuteInput);
+					initialCommandCount = commandCount;
+				} else {
+					initialCommandCount = commandCount;
+				}
+			}
+		}
+
+		hours = atoi(hoursInput);
+		minutes = atoi(minuteInput);
+
+		lastValues[0] = 0;
+		lastValues[1] = minutes;
+		lastValues[2] = hours;
+
+		makeRTCFormat(&hours, &minutes);
+		timeArray[0] = 0;
+		timeArray[1] = minutes;
+		timeArray[2] = hours;
+
+		setTime(timeArray);
+
+	// 	int arr[3] = {0x00, 0x00, 0x13};
+	//	setTime(arr);
+}
+
+void makeRTCFormat(int *hours,int *mins){
+        int tmp[2];
+
+        tmp[0] = *hours / 10;
+        tmp[1] = *hours % 10;
+
+        *hours = tmp[0];
+        *hours = *hours << 4;
+        *hours |= tmp[1];
+
+        tmp[0] = *mins / 10;
+        tmp[1] = *mins % 10;
+
+        *mins = tmp[0];
+        *mins = *mins << 4;
+        *mins |= tmp[1];
+}

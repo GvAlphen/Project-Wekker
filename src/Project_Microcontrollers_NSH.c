@@ -50,6 +50,8 @@ int main(void) {
 	int lastAlarmToggle = 0;
 
 	char alarmBit;
+	readAlarmBit(&alarmBit);
+	asm("nop");
 //	char arr[3];
 //	readRAM(arr, 0x08);
 //	delay(500);
@@ -59,11 +61,10 @@ int main(void) {
 
 
 	int arr2[3];
-// 	int arr[3] = {0x00, 0x00, 0x12};
-//	setTime(arr);
 
 
- 	readTime(arr2, 0x00); // arr2[] = { sec , min, hour}
+
+ 	readTime(arr2); // arr2[] = { sec , min, hour}
 
  	output[0] = (arr2[2] / 10) + '0';
  	output[1] = (arr2[2] % 10) + '0';
@@ -84,7 +85,7 @@ int main(void) {
 	while (1) {
 
 		//Main loop
-		while (!isTimeForAlarm(alarmBit) && (getCommand(commandCount - 1) != 15 && getCommand(commandCount - 1) != 11)) {
+		while (!isTimeForAlarm(alarmBit) && (getCommand(commandCount - 1) != 15 && getCommand(commandCount - 1) != 11 && getCommand(commandCount - 1) != 13)) {
 			//Prints the current time
 			printToDisplay(output);
 		}
@@ -98,6 +99,7 @@ int main(void) {
 			alarmBit = !alarmBit;
 			toggleAlarmState(alarmBit);
 			lastAlarmToggle = commandCount;
+			setAlarmBit(alarmBit);
 			//Give the user some feedback
 			for(i=0; i<200; i++){
 				asm("nop");
@@ -106,7 +108,6 @@ int main(void) {
 				} else {
 					printToDisplay("  -  ");
 				}
-
 			}
 		}
 
@@ -114,6 +115,9 @@ int main(void) {
 			alarmState();
 			resetAlarmTime();
 
+		}
+		if (getCommand(commandCount - 1) == 13){ // AANPASSEN!!!!!!!
+			setTimeState();
 		}
 
 		printToDisplay(output);
@@ -165,9 +169,9 @@ void resetAlarmTime(){
 }
 
 void setPriorities(){
-	IPR3 |= ( 1 << 6);
+	IPR3 |= ( 1 << 5);
 	IPR5 |= ( 1 << 11);
-	IPR7 |= ( 1 << 13);
+	IPR7 |= ( 1 << 14);
 
 }
 //initRTC();

@@ -34,17 +34,16 @@
 #define I2C1STAT	(*(unsigned int *)0x4005C004)
 
 void initRTC();
-void startCondition();
 void setMasterTransmitterMode();
-void writeSlaveAdress();
-void writeData();
+void setMasterReceiverMode();
+void readTime(int arr2[3]);
+void readRAMtime(int arr2[2]);
+void readAlarmBit(char *alarmBit);
 void setTime(int SecMinHour[3]);
-void showData();
-void readTime(int arr2[3], int adress);
-int BCDtoDec(int pointer);
-void writeRAM(int minHourAlarm[3], int adress);
-void readRAM(int arr2[3], int adress);
-
+void setRAMtime(int minHour[2]);
 void setAlarmBit(char alarmBit);
-void readAlarmBit(char alarmBit);
+void writeSlaveAdress();
+void writeByte(int byte);
+int BCDtoDec(int pointer);
+
 #endif /* RTC_H_ */
