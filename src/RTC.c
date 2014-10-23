@@ -116,8 +116,10 @@ void readRAMtime(int arr2[2])
 		if (dataRead == 1)
 		{
 			arr2[0] = BCDtoDec(0);
-			receiveBuffer[1] = receiveBuffer[2];
+			receiveBuffer[2] = receiveBuffer[1];
 			arr2[1] = BCDtoDec(2);
+			int test = arr2[1];
+			asm("nop");
 		}
 	}
 }

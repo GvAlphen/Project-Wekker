@@ -49,20 +49,19 @@ int main(void) {
 
 	int lastAlarmToggle = 0;
 
+	//Read stuff from RAM and put it in our program's variables
 	char alarmBit;
 	readAlarmBit(&alarmBit);
-	asm("nop");
-//	char arr[3];
-//	readRAM(arr, 0x08);
-//	delay(500);
-//	alarmBit = arr[2];
-//	clear();
 
-
+	int arr[2];
+	readRAMtime(arr);
+	alarmTime[0] = arr[1]/10 + '0';
+	alarmTime[1] = arr[1]%10 + '0';
+	alarmTime[2] = ':';
+	alarmTime[3] = arr[0]/10 + '0';
+	alarmTime[4] = arr[0]%10 + '0';
 
 	int arr2[3];
-
-
 
  	readTime(arr2); // arr2[] = { sec , min, hour}
 
@@ -79,8 +78,6 @@ int main(void) {
 
 	//Give the RNG a seed to work with (sec * minutes * hours)
 	initSomGenerator(arr2[0] * arr2[1] * arr2[2]);
-
-	setAlarm(2);
 
 	while (1) {
 
@@ -114,7 +111,6 @@ int main(void) {
 		if (isTimeForAlarm(alarmBit)) {
 			alarmState();
 			resetAlarmTime();
-
 		}
 		if (getCommand(commandCount - 1) == 13){ // AANPASSEN!!!!!!!
 			setTimeState();

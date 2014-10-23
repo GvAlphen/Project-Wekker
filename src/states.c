@@ -85,6 +85,10 @@ void addAlarmState(){
 	int newInput;
 	char buff[5];
 
+	int hours;
+	int minutes;
+	int toWrite[2];
+
 	initialCommandCount = commandCount;
 
 	while(commandCount == initialCommandCount){
@@ -137,6 +141,19 @@ void addAlarmState(){
 	}
 
 	//User confirmed both inputs
+
+	//Write it to the RTC
+	hours = atoi(hoursInput);
+	minutes = atoi(minuteInput);
+
+	makeRTCFormat(&minutes, &hours);
+
+	toWrite[0] = minutes;
+	toWrite[1] = hours;
+
+	setRAMtime(toWrite);
+
+	//Write it to the local alarm variable(from main)
 	buff[0] = hoursInput[0];
 	buff[1] = hoursInput[1];
 	buff[2] = ':';
@@ -148,8 +165,6 @@ void addAlarmState(){
 
 void toggleAlarmState(char alarmBit){ // RAM-addres for alarm; on/off is 0x10
 	setAlarmBit(alarmBit);
-
-
 }
 
 void setTimeState(){
