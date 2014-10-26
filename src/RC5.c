@@ -19,7 +19,7 @@ unsigned long command;
 unsigned int realCommand;
 int count = 0;
 unsigned int interval[1000];
-unsigned long commands[100];
+unsigned long commands[10000];
 unsigned int realCommands[100];
 
 int test[2000];

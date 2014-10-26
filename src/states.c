@@ -72,7 +72,8 @@ void alarmState(){
 		for(i=0; i<5; i++){
 			inputTotNuToe[i] = '\0';
 		}
-	}//Set the alarm time inside the RTC on an unreachable value
+	}
+	//Set the alarm time inside the RTC to an unreachable value
 	toWrite[0] = 0x99;
 	toWrite[1] = 0x99;
 
