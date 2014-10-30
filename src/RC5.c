@@ -19,11 +19,8 @@ unsigned long command;
 unsigned int realCommand;
 int count = 0;
 unsigned int interval[1000];
-unsigned long commands[10000];
-unsigned int realCommands[100];
-
-int test[2000];
-
+unsigned long commands[100];
+unsigned int realCommands[10];
 /*unsigned char getCommand(unsigned short message) {
 	return message & 0x3F;
 }*/
@@ -100,16 +97,19 @@ void EINT3_IRQHandler() {
 				command = command << 1;
 			}
 
+			//Loops back to the beginning of the array if we exceed 10
+			if(commandCount == 11){
+				commandCount = 1;
+			}
+
 			//Command in manchester
 			commands[commandCount] = command & 0xFFF;
 			currentToggle = command & 0x400000;
 			currentToggle = currentToggle >> 22;
-			test[commandCount] = currentToggle;
 
 			//Make this into the correct number
 			for (i = 0; i < 5; i++) {
-				if ((commands[commandCount] & (0x1 << i * 2))
-						== (0x1 << i * 2)) {
+				if ((commands[commandCount] & (0x1 << i * 2)) == (0x1 << i * 2)) {
 					realCommand = realCommand | (0x1 << i);
 				}
 			}

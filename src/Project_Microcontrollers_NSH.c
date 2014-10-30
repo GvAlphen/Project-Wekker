@@ -36,9 +36,8 @@ char output[5];
 char alarmTime[5] = "99:99";
 
 int main(void) {
+
 	int i;
-	int buff1[2];
-	int buff2[2];
 	initDisplay();
 	initTimer0();
 	initRC5();
@@ -46,6 +45,9 @@ int main(void) {
 	initRTC();
 	initRIT();
 	setPriorities();
+
+	//Make sure the alarm is off
+	setAlarm(0);
 
 	int lastAlarmToggle = 0;
 
@@ -110,6 +112,7 @@ int main(void) {
 
 		if (isTimeForAlarm(alarmBit)) {
 			alarmState();
+			setAlarm(0);
 			resetAlarmTime();
 		}
 		if (getCommand(commandCount - 1) == 13){ // AANPASSEN!!!!!!!
