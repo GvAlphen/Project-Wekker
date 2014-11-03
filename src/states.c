@@ -89,7 +89,6 @@ void addAlarmState(){
 	char toPrint[20] = "";
 	char defToPrint[20] = "";
 
-	char inputTotNuToe[100] = "";
 	int newInput;
 	char buff[5];
 
@@ -103,7 +102,7 @@ void addAlarmState(){
 		printToDisplay("00:00");
 	}
 
-	while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2){
+	while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2 || atoi(hoursInput) > 24){
 		printToDisplay(hoursInput);
 		if(commandCount != initialCommandCount){
 			if(getCommand(commandCount - 1) == 23){
@@ -125,7 +124,7 @@ void addAlarmState(){
 	strcat(toPrint, ":");
 	strcpy(defToPrint, toPrint);
 
-	while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2){
+	while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2 || atoi(minuteInput) > 60){
 		printToDisplay(toPrint);
 		if(commandCount != initialCommandCount){
 			if(getCommand(commandCount - 1) == 23){
@@ -187,7 +186,6 @@ void setTimeState(){
 		char toPrint[20] = "";
 		char defToPrint[20] = "";
 
-		char inputTotNuToe[100] = "";
 		int newInput;
 		char buff[5];
 		int timeArray[3];
@@ -198,7 +196,7 @@ void setTimeState(){
 			printToDisplay("00:00");
 		}
 
-		while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2){
+		while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2 || atoi(hoursInput) > 24){
 			printToDisplay(hoursInput);
 			if(commandCount != initialCommandCount){
 				if(getCommand(commandCount - 1) == 23){
@@ -216,11 +214,12 @@ void setTimeState(){
 				}
 			}
 		}
+
 		strcat(toPrint, hoursInput);
 		strcat(toPrint, ":");
 		strcpy(defToPrint, toPrint);
 
-		while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2){
+		while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2 || atoi(minuteInput) > 60){
 			printToDisplay(toPrint);
 			if(commandCount != initialCommandCount){
 				if(getCommand(commandCount - 1) == 23){
