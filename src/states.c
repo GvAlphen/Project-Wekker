@@ -20,6 +20,8 @@ void alarmState(){
 	strcpy(som, strptr);
 	free(strptr);
 
+	int toWrite[2];
+
 	int answer = 9999;
 
 	char antwoordOpSomStr[6];
@@ -71,6 +73,12 @@ void alarmState(){
 			inputTotNuToe[i] = '\0';
 		}
 	}
+	//Set the alarm time inside the RTC to an unreachable value
+	toWrite[0] = 0x99;
+	toWrite[1] = 0x99;
+
+	setRAMtime(toWrite);
+
 	setAlarm(0);
 }
 
@@ -81,7 +89,6 @@ void addAlarmState(){
 	char toPrint[20] = "";
 	char defToPrint[20] = "";
 
-	char inputTotNuToe[100] = "";
 	int newInput;
 	char buff[5];
 
@@ -95,7 +102,7 @@ void addAlarmState(){
 		printToDisplay("00:00");
 	}
 
-	while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2){
+	while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2 || atoi(hoursInput) > 24){
 		printToDisplay(hoursInput);
 		if(commandCount != initialCommandCount){
 			if(getCommand(commandCount - 1) == 23){
@@ -103,10 +110,12 @@ void addAlarmState(){
 				hoursInput[strlen(hoursInput) - 1] = '\0';
 				initialCommandCount = commandCount;
 			} else if(getCommand(commandCount - 1) != 22) {
-				newInput = getCommand(commandCount - 1);
-				buff[0] = (newInput % 10) + '0';
-				buff[1] = '\0';
-				strcat(hoursInput, buff);
+				if(strlen(hoursInput) < 2){
+					newInput = getCommand(commandCount - 1);
+					buff[0] = (newInput % 10) + '0';
+					buff[1] = '\0';
+					strcat(hoursInput, buff);
+				}
 				initialCommandCount = commandCount;
 			} else {
 				initialCommandCount = commandCount;
@@ -117,7 +126,7 @@ void addAlarmState(){
 	strcat(toPrint, ":");
 	strcpy(defToPrint, toPrint);
 
-	while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2){
+	while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2 || atoi(minuteInput) > 60){
 		printToDisplay(toPrint);
 		if(commandCount != initialCommandCount){
 			if(getCommand(commandCount - 1) == 23){
@@ -127,12 +136,14 @@ void addAlarmState(){
 				strcat(toPrint, minuteInput);
 				initialCommandCount = commandCount;
 			} else if(getCommand(commandCount - 1) != 22) {
-				newInput = getCommand(commandCount - 1);
-				buff[0] = (newInput % 10) + '0';
-				buff[1] = '\0';
-				strcat(minuteInput, buff);
-				strcpy(toPrint, defToPrint);
-				strcat(toPrint, minuteInput);
+				if(strlen(minuteInput) < 2){
+					newInput = getCommand(commandCount - 1);
+					buff[0] = (newInput % 10) + '0';
+					buff[1] = '\0';
+					strcat(minuteInput, buff);
+					strcpy(toPrint, defToPrint);
+					strcat(toPrint, minuteInput);
+				}
 				initialCommandCount = commandCount;
 			} else {
 				initialCommandCount = commandCount;
@@ -140,7 +151,7 @@ void addAlarmState(){
 		}
 	}
 
-	//User confirmed both inputs
+	//User confirmed both inputs!
 
 	//Write it to the RTC
 	hours = atoi(hoursInput);
@@ -179,7 +190,6 @@ void setTimeState(){
 		char toPrint[20] = "";
 		char defToPrint[20] = "";
 
-		char inputTotNuToe[100] = "";
 		int newInput;
 		char buff[5];
 		int timeArray[3];
@@ -190,7 +200,7 @@ void setTimeState(){
 			printToDisplay("00:00");
 		}
 
-		while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2){
+		while(getCommand(commandCount - 1) != 22 || strlen(hoursInput) != 2 || atoi(hoursInput) > 24){
 			printToDisplay(hoursInput);
 			if(commandCount != initialCommandCount){
 				if(getCommand(commandCount - 1) == 23){
@@ -198,21 +208,24 @@ void setTimeState(){
 					hoursInput[strlen(hoursInput) - 1] = '\0';
 					initialCommandCount = commandCount;
 				} else if(getCommand(commandCount - 1) != 22) {
-					newInput = getCommand(commandCount - 1);
-					buff[0] = (newInput % 10) + '0';
-					buff[1] = '\0';
-					strcat(hoursInput, buff);
+					if(strlen(hoursInput) < 2){
+						newInput = getCommand(commandCount - 1);
+						buff[0] = (newInput % 10) + '0';
+						buff[1] = '\0';
+						strcat(hoursInput, buff);
+					}
 					initialCommandCount = commandCount;
 				} else {
 					initialCommandCount = commandCount;
 				}
 			}
 		}
+
 		strcat(toPrint, hoursInput);
 		strcat(toPrint, ":");
 		strcpy(defToPrint, toPrint);
 
-		while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2){
+		while(getCommand(commandCount - 1) != 22 || strlen(minuteInput) != 2 || atoi(minuteInput) > 60){
 			printToDisplay(toPrint);
 			if(commandCount != initialCommandCount){
 				if(getCommand(commandCount - 1) == 23){
@@ -222,12 +235,14 @@ void setTimeState(){
 					strcat(toPrint, minuteInput);
 					initialCommandCount = commandCount;
 				} else if(getCommand(commandCount - 1) != 22) {
-					newInput = getCommand(commandCount - 1);
-					buff[0] = (newInput % 10) + '0';
-					buff[1] = '\0';
-					strcat(minuteInput, buff);
-					strcpy(toPrint, defToPrint);
-					strcat(toPrint, minuteInput);
+					if(strlen(minuteInput) < 2){
+						newInput = getCommand(commandCount - 1);
+						buff[0] = (newInput % 10) + '0';
+						buff[1] = '\0';
+						strcat(minuteInput, buff);
+						strcpy(toPrint, defToPrint);
+						strcat(toPrint, minuteInput);
+					}
 					initialCommandCount = commandCount;
 				} else {
 					initialCommandCount = commandCount;
